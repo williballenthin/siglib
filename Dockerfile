@@ -38,10 +38,10 @@ RUN New-Item -ItemType Directory -Path downloads;
 RUN New-Item -ItemType File -Path downloads\AlwaysAllowEverything;
 RUN scripts\bootstrap.ps1;
 
-RUN .\vcpkg.exe integrate install
+RUN ./vcpkg.exe integrate install
 
 # prime tools (cmake, git, nuget, 7z, etc)
-RUN .\vcpkg.exe install zlib
+RUN ./vcpkg.exe install zlib
 
 ADD x64-windows-static-v140.cmake C:/vcpkg/vcpkg-master/triplets/
 ADD x64-windows-static-v141.cmake C:/vcpkg/vcpkg-master/triplets/
@@ -50,5 +50,5 @@ ADD x86-windows-static-v140.cmake C:/vcpkg/vcpkg-master/triplets/
 ADD x86-windows-static-v141.cmake C:/vcpkg/vcpkg-master/triplets/
 ADD x86-windows-static-v142.cmake C:/vcpkg/vcpkg-master/triplets/
 
-ENTRYPOINT ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
 CMD ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
+ENTRYPOINT ["C:/vcpkg/vcpkg-master/vcpkg.exe"]
