@@ -1,4 +1,4 @@
-name: 'vcpkg-v140-v141-v142'
+name: 'siglib'
 description: 'vcpkg with VC++ Build Tools for VS 2015, 2017, 2019'
 inputs:
   VCPKG_PLATFORM_TOOLSET:

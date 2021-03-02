@@ -6,7 +6,7 @@ jobs:
     name: build zlib
     steps:
     - name: zlib-v140
-      uses: siglib/vcpkg-v140-v141-v142@v1
+      uses: williballenthin/siglib
       with:
         VCPKG_PLATFORM_TOOLSET: 'v140'
         VCPKG_PACKAGE: 'zlib'
