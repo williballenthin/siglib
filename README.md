@@ -1,10 +1,26 @@
-## build
+# siglib
+
+configuration and tools to build function identification signatures, such as FLIRT.
+provides a reproducible way to build object/archive files 
+from [vcpkg](https://github.com/microsoft/vcpkg) using [Windows Containers via Docker](https://www.docker.com/products/windows-containers).
+
+## prerequisites
+
+  - Windows 10 with Hyper-V and Containers enabled
+  - Docker for Windows, configured with Windows Containers
+  - `pcf.exe` from Hex-Rays FLAIR utilities (place in this directory)
+
+## setup
+
+build the Windows container image named `buildtools`:
 
 ```sh
-docker build -t buildtools:latest --isolation=hyperv --network "Default Switch"  --memory 2GB .
+docker build -t buildtools:latest --isolation=hyperv --network "Default Switch" .
 ```
 
-### build a lib via vcpkg
+## collect archive files
+
+### build a .lib via vcpkg
 
 available triplets:
 
@@ -38,7 +54,12 @@ or use the ps1 function `Build-Library`:
 Build-Library -Verbose @("cryptopp", "curl", "detours", "openssl", "mbedtls", "zlib")
 ```
 
-## standard library locations
+use `docker volume inspect sigs` to figure out where the volume data is stored.
+by default, its probably `C:\ProgramData\Docker\volumes\libs\_data`.
+
+### standard library and runtime locations
+
+I don't think these are redistributable, but we can generate patterns from them.
 
 ```
 PS C:\> dir -Path C:\ -Filter libcmt.lib -Recurse -ErrorAction SilentlyContinue -Force | %{$_.FullName}
