@@ -19,11 +19,10 @@ Install [components](https://docs.microsoft.com/en-us/visualstudio/install/workl
 
 This results in:
   - `C:\BuildTools\VC\Tools\MSVC\14.16.27023\`: MSVC v141 - VS 2017 C++ x64/x86 build tools (v14.16)
+  - `C:\BuildTools\VC\Tools\MSVC\14.16.27023\atlmfc`: C++ MFC for v141 build tools (x86 & x64)
   - `C:\Program Files (x86)\Windows Kits\10\lib\10.0.16299.0`: Windows 10 SDK (10.0.16299.0), version 16.9.31004.209, usually bundled with Visual Studio 2017 ver.15.4 
   - `C:\Program Files (x86)\Windows Kits\10\lib\10.0.17134.0`: Windows 10 SDK (10.0.17134.0), version 16.9.31004.209, usually bundled with Visual Studio 2017 ver.15.7 
   - `C:\Program Files (x86)\Windows Kits\10\lib\10.0.17763.0`: Windows 10 SDK (10.0.17763.0), version 16.0.28517.75, usually bundled with Visual Studio 2017 ver.15.8 
-  - TODO: where is ATL?
-  - TODO: where is MFC?
 
 ## archive files
 

@@ -119,8 +119,8 @@ RUN C:\TEMP\vs_buildtools2019.exe --quiet --wait --norestart --nocache `
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-ADD https://github.com/Microsoft/vcpkg/archive/master.zip C:\vcpkg.zip;
-RUN Expand-Archive C:\vcpkg.zip -DestinationPath C:\vcpkg;
+RUN Invoke-WebRequest https://github.com/Microsoft/vcpkg/archive/master.zip -OutFile vcpkg.zip;
+RUN Expand-Archive vcpkg.zip -DestinationPath vcpkg;
 
 WORKDIR C:/vcpkg/vcpkg-master
 RUN New-Item -ItemType Directory -Path downloads;

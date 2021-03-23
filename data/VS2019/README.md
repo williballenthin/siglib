@@ -20,16 +20,9 @@ This results in:
   - `C:\BuildTools\VC\Tools\MSVC\14.28.29910\atlmfc\lib\`: C++ MFC for latest v142 build tools (x86 & x64), version 16.4.29313.120
   - `C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0`: Windows 10 SDK (10.0.18362.0), version 16.1.28829.92, usually bundled with Visual Studio 2019
   - `C:\Program Files (x86)\Windows Kits\10\lib\10.0.19041.0`: Windows 10 SDK (10.0.19041.0), version ???, bundled with VS2019???
-  - TODO: where is ATL?
 
-## prepare
+## archive files
 
-## get lib/obj files
-
-## generate .pat
-
-### x86
-
-### amd64
+## pat files
 
 ## contents

@@ -13,7 +13,9 @@ Install [components](https://docs.microsoft.com/en-us/visualstudio/install/workl
 
 This results in:
   - `C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\`: Visual Studio 2015 tools
+  - `C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\atlmfc`: C++ MFC for v140 build tools
   - `C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\`: Windows Standalone SDK for Windows 10 from VS2015
+
 
 ## archive files
 
