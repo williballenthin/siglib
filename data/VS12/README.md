@@ -283,7 +283,7 @@ edf5ed4648eeae547032a0143557488d *VS12/VC/lib/msvcprt.lib
 
 ## x86
 ```
-$ find VS12/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe -a {} VS12.pat \;
+$ find VS12/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe {} {}.pat \;
 .\VS12\VC\lib\libcmt.lib: skipped 662, total 9232
 .\VS12\VC\lib\libcmtd.lib: skipped 134, total 9591
 .\VS12\VC\lib\libcpmt.lib: skipped 1042, total 10522
@@ -299,11 +299,28 @@ $ find VS12/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o
 .\VS12\VC\lib\msvcrtd.lib: skipped 2309, total 2616
 .\VS12\VC\lib\msvcurt.lib: skipped 3813, total 25722
 .\VS12\VC\lib\msvcurtd.lib: skipped 3889, total 27241
+
+$ tar -czvf VS12/VS12.tar.gz VS12/VC/lib/*.pat
+VS12/VC/lib/libcmt.lib.pat
+VS12/VC/lib/libcmtd.lib.pat
+VS12/VC/lib/libcpmt.lib.pat
+VS12/VC/lib/libcpmt1.lib.pat
+VS12/VC/lib/libcpmtd.lib.pat
+VS12/VC/lib/libcpmtd0.lib.pat
+VS12/VC/lib/libcpmtd1.lib.pat
+VS12/VC/lib/msvcmrt.lib.pat
+VS12/VC/lib/msvcmrtd.lib.pat
+VS12/VC/lib/msvcprt.lib.pat
+VS12/VC/lib/msvcprtd.lib.pat
+VS12/VC/lib/msvcrt.lib.pat
+VS12/VC/lib/msvcrtd.lib.pat
+VS12/VC/lib/msvcurt.lib.pat
+VS12/VC/lib/msvcurtd.lib.pat
 ```
 
 ## amd64
 ```
-$ find VS12/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe -a {} VS12_amd64.pat \;
+$ find VS12/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe {} {}.pat \;
 .\VS12\VC\lib\amd64\libcmt.lib: skipped 614, total 9170
 .\VS12\VC\lib\amd64\libcmtd.lib: skipped 147, total 9546
 .\VS12\VC\lib\amd64\libcpmt.lib: skipped 1290, total 10543
@@ -319,22 +336,63 @@ $ find VS12/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -inam
 .\VS12\VC\lib\amd64\msvcrtd.lib: skipped 2264, total 2554
 .\VS12\VC\lib\amd64\msvcurt.lib: skipped 3767, total 25676
 .\VS12\VC\lib\amd64\msvcurtd.lib: skipped 3838, total 27106
+
+$ tar -czvf VS12/VS12_amd64.tar.gz VS12/VC/lib/amd64/*.pat
+VS12/VC/lib/amd64/libcmt.lib.pat
+VS12/VC/lib/amd64/libcmtd.lib.pat
+VS12/VC/lib/amd64/libcpmt.lib.pat
+VS12/VC/lib/amd64/libcpmt1.lib.pat
+VS12/VC/lib/amd64/libcpmtd.lib.pat
+VS12/VC/lib/amd64/libcpmtd0.lib.pat
+VS12/VC/lib/amd64/libcpmtd1.lib.pat
+VS12/VC/lib/amd64/msvcmrt.lib.pat
+VS12/VC/lib/amd64/msvcmrtd.lib.pat
+VS12/VC/lib/amd64/msvcprt.lib.pat
+VS12/VC/lib/amd64/msvcprtd.lib.pat
+VS12/VC/lib/amd64/msvcrt.lib.pat
+VS12/VC/lib/amd64/msvcrtd.lib.pat
+VS12/VC/lib/amd64/msvcurt.lib.pat
+VS12/VC/lib/amd64/msvcurtd.lib.pat
 ```
 
 ```
-$ wc -l VS12*.pat
-  119196 VS12.pat
-  118209 VS12_amd64.pat
+$ wc -l VS12/VC/lib/*.pat
+    8571 VS12/VC/lib/libcmt.lib.pat
+    9458 VS12/VC/lib/libcmtd.lib.pat
+    9481 VS12/VC/lib/libcpmt.lib.pat
+   10068 VS12/VC/lib/libcpmt1.lib.pat
+   12219 VS12/VC/lib/libcpmtd.lib.pat
+   11024 VS12/VC/lib/libcpmtd0.lib.pat
+   11938 VS12/VC/lib/libcpmtd1.lib.pat
+     265 VS12/VC/lib/msvcmrt.lib.pat
+     288 VS12/VC/lib/msvcmrtd.lib.pat
+       9 VS12/VC/lib/msvcprt.lib.pat
+      16 VS12/VC/lib/msvcprtd.lib.pat
+     302 VS12/VC/lib/msvcrt.lib.pat
+     308 VS12/VC/lib/msvcrtd.lib.pat
+   21910 VS12/VC/lib/msvcurt.lib.pat
+   23353 VS12/VC/lib/msvcurtd.lib.pat
+  119210 total
 
-$ gzip -v -k VS12.pat
-VS12.pat:        87.3% -- created VS12.pat.gz
+$ wc -l VS12/VC/lib/amd64/*.pat
+    8557 VS12/VC/lib/amd64/libcmt.lib.pat
+    9400 VS12/VC/lib/amd64/libcmtd.lib.pat
+    9254 VS12/VC/lib/amd64/libcpmt.lib.pat
+    9802 VS12/VC/lib/amd64/libcpmt1.lib.pat
+   12117 VS12/VC/lib/amd64/libcpmtd.lib.pat
+   10922 VS12/VC/lib/amd64/libcpmtd0.lib.pat
+   11836 VS12/VC/lib/amd64/libcpmtd1.lib.pat
+     265 VS12/VC/lib/amd64/msvcmrt.lib.pat
+     288 VS12/VC/lib/amd64/msvcmrtd.lib.pat
+       9 VS12/VC/lib/amd64/msvcprt.lib.pat
+      16 VS12/VC/lib/amd64/msvcprtd.lib.pat
+     287 VS12/VC/lib/amd64/msvcrt.lib.pat
+     291 VS12/VC/lib/amd64/msvcrtd.lib.pat
+   21910 VS12/VC/lib/amd64/msvcurt.lib.pat
+   23269 VS12/VC/lib/amd64/msvcurtd.lib.pat
+  118223 total
 
-$ gzip -v -k VS12_amd64.pat
-VS12_amd64.pat:  87.3% -- created VS12_amd64.pat.gz
-
-$ du -h VS12*.pat*
-41M     VS12.pat
-5.2M    VS12.pat.gz
-42M     VS12_amd64.pat
-5.4M    VS12_amd64.pat.gz
+$ du -h VS12/*.tar.gz
+5.2M    VS12/VS12.tar.gz
+5.4M    VS12/VS12_amd64.tar.gz
 ```

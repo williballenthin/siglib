@@ -278,7 +278,7 @@ f0271eda37dd690112b0d34e73ddbfff *VS11/VC/lib/msvcrt.lib
 
 ## x86
 ```
-$ find VS11/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe -a {} VS11.pat \;
+$ find VS11/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe {} {}.pat \;
 .\VS11\VC\lib\libcmt.lib: skipped 664, total 6887
 .\VS11\VC\lib\libcmtd.lib: skipped 134, total 7300
 .\VS11\VC\lib\libcpmt.lib: skipped 1108, total 10080
@@ -294,11 +294,28 @@ $ find VS11/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o
 .\VS11\VC\lib\msvcrtd.lib: skipped 2037, total 2328
 .\VS11\VC\lib\msvcurt.lib: skipped 3563, total 25379
 .\VS11\VC\lib\msvcurtd.lib: skipped 3639, total 26812
+
+$ tar -czvf VS11/VS11.tar.gz VS11/VC/lib/*.pat
+VS11/VC/lib/libcmt.lib.pat
+VS11/VC/lib/libcmtd.lib.pat
+VS11/VC/lib/libcpmt.lib.pat
+VS11/VC/lib/libcpmt1.lib.pat
+VS11/VC/lib/libcpmtd.lib.pat
+VS11/VC/lib/libcpmtd0.lib.pat
+VS11/VC/lib/libcpmtd1.lib.pat
+VS11/VC/lib/msvcmrt.lib.pat
+VS11/VC/lib/msvcmrtd.lib.pat
+VS11/VC/lib/msvcprt.lib.pat
+VS11/VC/lib/msvcprtd.lib.pat
+VS11/VC/lib/msvcrt.lib.pat
+VS11/VC/lib/msvcrtd.lib.pat
+VS11/VC/lib/msvcurt.lib.pat
+VS11/VC/lib/msvcurtd.lib.pat
 ```
 
 ## amd64
 ```
-$ find VS11/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe -a {} VS11_amd64.pat \;
+$ find VS11/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe {} {}.pat \;
 .\VS11\VC\lib\amd64\libcmt.lib: skipped 561, total 7084
 .\VS11\VC\lib\amd64\libcmtd.lib: skipped 149, total 7514
 .\VS11\VC\lib\amd64\libcpmt.lib: skipped 1263, total 10110
@@ -314,12 +331,62 @@ $ find VS11/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -inam
 .\VS11\VC\lib\amd64\msvcrtd.lib: skipped 1994, total 2269
 .\VS11\VC\lib\amd64\msvcurt.lib: skipped 3519, total 25335
 .\VS11\VC\lib\amd64\msvcurtd.lib: skipped 3590, total 26679
+
+$ tar -czvf VS11/VS11_amd64.tar.gz VS11/VC/lib/amd64/*.pat
+VS11/VC/lib/amd64/libcmt.lib.pat
+VS11/VC/lib/amd64/libcmtd.lib.pat
+VS11/VC/lib/amd64/libcpmt.lib.pat
+VS11/VC/lib/amd64/libcpmt1.lib.pat
+VS11/VC/lib/amd64/libcpmtd.lib.pat
+VS11/VC/lib/amd64/libcpmtd0.lib.pat
+VS11/VC/lib/amd64/libcpmtd1.lib.pat
+VS11/VC/lib/amd64/msvcmrt.lib.pat
+VS11/VC/lib/amd64/msvcmrtd.lib.pat
+VS11/VC/lib/amd64/msvcprt.lib.pat
+VS11/VC/lib/amd64/msvcprtd.lib.pat
+VS11/VC/lib/amd64/msvcrt.lib.pat
+VS11/VC/lib/amd64/msvcrtd.lib.pat
+VS11/VC/lib/amd64/msvcurt.lib.pat
+VS11/VC/lib/amd64/msvcurtd.lib.pat
 ```
 
 ```
-$ wc -l VS11*.pat
-  112200 VS11.pat
-  112050 VS11_amd64.pat
+$ wc -l VS11/VC/lib/*.pat
+    6224 VS11/VC/lib/libcmt.lib.pat
+    7167 VS11/VC/lib/libcmtd.lib.pat
+    8973 VS11/VC/lib/libcpmt.lib.pat
+    9617 VS11/VC/lib/libcpmt1.lib.pat
+   11899 VS11/VC/lib/libcpmtd.lib.pat
+   10579 VS11/VC/lib/libcpmtd0.lib.pat
+   11611 VS11/VC/lib/libcpmtd1.lib.pat
+     265 VS11/VC/lib/msvcmrt.lib.pat
+     286 VS11/VC/lib/msvcmrtd.lib.pat
+       9 VS11/VC/lib/msvcprt.lib.pat
+      15 VS11/VC/lib/msvcprtd.lib.pat
+     286 VS11/VC/lib/msvcrt.lib.pat
+     292 VS11/VC/lib/msvcrtd.lib.pat
+   21817 VS11/VC/lib/msvcurt.lib.pat
+   23174 VS11/VC/lib/msvcurtd.lib.pat
+  112214 total
+
+$ wc -l VS11/VC/lib/amd64/*.pat
+    6524 VS11/VC/lib/amd64/libcmt.lib.pat
+    7366 VS11/VC/lib/amd64/libcmtd.lib.pat
+    8848 VS11/VC/lib/amd64/libcpmt.lib.pat
+    9447 VS11/VC/lib/amd64/libcpmt1.lib.pat
+   11819 VS11/VC/lib/amd64/libcpmtd.lib.pat
+   10499 VS11/VC/lib/amd64/libcpmtd0.lib.pat
+   11531 VS11/VC/lib/amd64/libcpmtd1.lib.pat
+     265 VS11/VC/lib/amd64/msvcmrt.lib.pat
+     286 VS11/VC/lib/amd64/msvcmrtd.lib.pat
+       9 VS11/VC/lib/amd64/msvcprt.lib.pat
+      15 VS11/VC/lib/amd64/msvcprtd.lib.pat
+     272 VS11/VC/lib/amd64/msvcrt.lib.pat
+     276 VS11/VC/lib/amd64/msvcrtd.lib.pat
+   21817 VS11/VC/lib/amd64/msvcurt.lib.pat
+   23090 VS11/VC/lib/amd64/msvcurtd.lib.pat
+  112064 total
+
 
 $ gzip -v -k VS11.pat
 VS11.pat:        87.7% -- created VS11.pat.gz
@@ -327,9 +394,7 @@ VS11.pat:        87.7% -- created VS11.pat.gz
 $ gzip -v -k VS11_amd64.pat
 VS11_amd64.pat:  87.6% -- created VS11_amd64.pat.gz
 
-$ du -h VS11*.pat*
-41M     VS11.pat
-5.0M    VS11.pat.gz
-42M     VS11_amd64.pat
-5.1M    VS11_amd64.pat.gz
+$ du -h VS11/*.tar.gz
+5.0M    VS11/VS11.tar.gz
+5.1M    VS11/VS11_amd64.tar.gz
 ```
