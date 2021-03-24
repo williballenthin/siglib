@@ -205,27 +205,44 @@ dec37089d5b6a08a0aa9fca460ad1f99 *VS10/VC/lib/msvcurtd.lib
 
 ## x86
 ```
-$ find VS10/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe -a {} VS10.pat \;
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\libcmt.lib: skipped 586, total 5895
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\libcmtd.lib: skipped 132, total 6115
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\libcpmt.lib: skipped 381, total 5587
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\libcpmt1.lib: skipped 472, total 6005
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\libcpmtd.lib: skipped 0, total 6657
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\libcpmtd0.lib: skipped 0, total 5939
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\libcpmtd1.lib: skipped 0, total 6403
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\msvcmrt.lib: skipped 283, total 651
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\msvcmrtd.lib: skipped 283, total 700
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\msvcprt.lib: skipped 1676, total 1689
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\msvcprtd.lib: skipped 1687, total 1703
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\msvcrt.lib: skipped 1897, total 2023
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\msvcrtd.lib: skipped 1958, total 2089
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\msvcurt.lib: skipped 3569, total 21803
-C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\msvcurtd.lib: skipped 3645, total 23139
+$ find VS10/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe {} {}.pat \;
+.\VS10\VC\lib\libcmt.lib: skipped 586, total 5895
+.\VS10\VC\lib\libcmtd.lib: skipped 132, total 6115
+.\VS10\VC\lib\libcpmt.lib: skipped 381, total 5587
+.\VS10\VC\lib\libcpmt1.lib: skipped 472, total 6005
+.\VS10\VC\lib\libcpmtd.lib: skipped 0, total 6657
+.\VS10\VC\lib\libcpmtd0.lib: skipped 0, total 5939
+.\VS10\VC\lib\libcpmtd1.lib: skipped 0, total 6403
+.\VS10\VC\lib\msvcmrt.lib: skipped 283, total 651
+.\VS10\VC\lib\msvcmrtd.lib: skipped 283, total 700
+.\VS10\VC\lib\msvcprt.lib: skipped 1676, total 1689
+.\VS10\VC\lib\msvcprtd.lib: skipped 1687, total 1703
+.\VS10\VC\lib\msvcrt.lib: skipped 1897, total 2023
+.\VS10\VC\lib\msvcrtd.lib: skipped 1958, total 2089
+.\VS10\VC\lib\msvcurt.lib: skipped 3569, total 21803
+.\VS10\VC\lib\msvcurtd.lib: skipped 3645, total 23139
+
+$ tar -czvf VS10/VS10.tar.gz VS10/VC/lib/*.pat
+VS10/VC/lib/libcmt.lib.pat
+VS10/VC/lib/libcmtd.lib.pat
+VS10/VC/lib/libcpmt.lib.pat
+VS10/VC/lib/libcpmt1.lib.pat
+VS10/VC/lib/libcpmtd.lib.pat
+VS10/VC/lib/libcpmtd0.lib.pat
+VS10/VC/lib/libcpmtd1.lib.pat
+VS10/VC/lib/msvcmrt.lib.pat
+VS10/VC/lib/msvcmrtd.lib.pat
+VS10/VC/lib/msvcprt.lib.pat
+VS10/VC/lib/msvcprtd.lib.pat
+VS10/VC/lib/msvcrt.lib.pat
+VS10/VC/lib/msvcrtd.lib.pat
+VS10/VC/lib/msvcurt.lib.pat
+VS10/VC/lib/msvcurtd.lib.pat
 ```
 
 ## amd64
 ```
-$ find VS10/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe -a {} VS10_amd64.pat \;
+$ find VS10/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe {} {}.pat \;
 C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\amd64\libcmt.lib: skipped 513, total 6079
 C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\amd64\libcmtd.lib: skipped 147, total 6326
 C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\amd64\libcpmt.lib: skipped 435, total 5637
@@ -241,22 +258,63 @@ C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\amd64
 C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\amd64\msvcrtd.lib: skipped 1928, total 2040
 C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\amd64\msvcurt.lib: skipped 3538, total 21772
 C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS10\VC\lib\amd64\msvcurtd.lib: skipped 3609, total 23049
+
+$ tar -czvf VS10/VS10_amd64.tar.gz VS10/VC/lib/amd64/*.pat
+VS10/VC/lib/amd64/libcmt.lib.pat
+VS10/VC/lib/amd64/libcmtd.lib.pat
+VS10/VC/lib/amd64/libcpmt.lib.pat
+VS10/VC/lib/amd64/libcpmt1.lib.pat
+VS10/VC/lib/amd64/libcpmtd.lib.pat
+VS10/VC/lib/amd64/libcpmtd0.lib.pat
+VS10/VC/lib/amd64/libcpmtd1.lib.pat
+VS10/VC/lib/amd64/msvcmrt.lib.pat
+VS10/VC/lib/amd64/msvcmrtd.lib.pat
+VS10/VC/lib/amd64/msvcprt.lib.pat
+VS10/VC/lib/amd64/msvcprtd.lib.pat
+VS10/VC/lib/amd64/msvcrt.lib.pat
+VS10/VC/lib/amd64/msvcrtd.lib.pat
+VS10/VC/lib/amd64/msvcurt.lib.pat
+VS10/VC/lib/amd64/msvcurtd.lib.pat
 ```
 
 ```
-$ wc -l VS10*.pat
-   79830 VS10.pat
-   80032 VS10_amd64.pat
+$ wc -l VS10/VC/lib/*.pat
+    5310 VS10/VC/lib/libcmt.lib.pat
+    5984 VS10/VC/lib/libcmtd.lib.pat
+    5207 VS10/VC/lib/libcpmt.lib.pat
+    5534 VS10/VC/lib/libcpmt1.lib.pat
+    6658 VS10/VC/lib/libcpmtd.lib.pat
+    5940 VS10/VC/lib/libcpmtd0.lib.pat
+    6404 VS10/VC/lib/libcpmtd1.lib.pat
+     369 VS10/VC/lib/msvcmrt.lib.pat
+     418 VS10/VC/lib/msvcmrtd.lib.pat
+      14 VS10/VC/lib/msvcprt.lib.pat
+      17 VS10/VC/lib/msvcprtd.lib.pat
+     127 VS10/VC/lib/msvcrt.lib.pat
+     132 VS10/VC/lib/msvcrtd.lib.pat
+   18235 VS10/VC/lib/msvcurt.lib.pat
+   19495 VS10/VC/lib/msvcurtd.lib.pat
+   79844 total
 
-$ gzip -v -k VS10.pat
-VS10.pat:        86.8% -- created VS10.pat.gz
+$ wc -l VS10/VC/lib/amd64/*.pat
+    5567 VS10/VC/lib/amd64/libcmt.lib.pat
+    6180 VS10/VC/lib/amd64/libcmtd.lib.pat
+    5203 VS10/VC/lib/amd64/libcpmt.lib.pat
+    5526 VS10/VC/lib/amd64/libcpmt1.lib.pat
+    6609 VS10/VC/lib/amd64/libcpmtd.lib.pat
+    5891 VS10/VC/lib/amd64/libcpmtd0.lib.pat
+    6355 VS10/VC/lib/amd64/libcpmtd1.lib.pat
+     369 VS10/VC/lib/amd64/msvcmrt.lib.pat
+     418 VS10/VC/lib/amd64/msvcmrtd.lib.pat
+      12 VS10/VC/lib/amd64/msvcprt.lib.pat
+      17 VS10/VC/lib/amd64/msvcprtd.lib.pat
+     110 VS10/VC/lib/amd64/msvcrt.lib.pat
+     113 VS10/VC/lib/amd64/msvcrtd.lib.pat
+   18235 VS10/VC/lib/amd64/msvcurt.lib.pat
+   19441 VS10/VC/lib/amd64/msvcurtd.lib.pat
+   80046 total
 
-$ gzip -v -k VS10_amd64.pat
-VS10_amd64.pat:  86.9% -- created VS10_amd64.pat.gz
-
-$ du -h VS10*.pat*
-27M     VS10.pat
-3.5M    VS10.pat.gz
-28M     VS10_amd64.pat
-3.7M    VS10_amd64.pat.gz
+$ du -h VS10/*.tar.gz
+3.5M    VS10/VS10.tar.gz
+3.7M    VS10/VS10_amd64.tar.gz
 ```
