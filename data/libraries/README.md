@@ -18,6 +18,13 @@ for TRIPLET in \
 done
 ```
 
+pcf version:
+```
+COFF parser. Copyright (c) 1997-2019 Hex-Rays SA. Version 1.23
+Usage: pcf [-switch or @file or $env_var] file [pattern-file]
+        (wildcards are allowed)
+```
+
 
 ## show .tgz contents
 
