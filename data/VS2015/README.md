@@ -230,6 +230,13 @@ f83e39d7cbe39437fb0202c7a8c36c83  10.0.10240.0/ucrt/x64/ucrt.lib
 
 ## .pat
 
+pcf version:
+```
+COFF parser. Copyright (c) 1997-2019 Hex-Rays SA. Version 1.23
+Usage: pcf [-switch or @file or $env_var] file [pattern-file]
+        (wildcards are allowed)
+```
+
 ### compiler: 14.0
 
 ```
