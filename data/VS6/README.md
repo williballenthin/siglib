@@ -78,7 +78,7 @@ b437028fd12ce3db5baf857c21ac0718 *VS6/vc98/lib/libcpmtd.lib
 380dd6cd28ab53a7e22ad9bf902135fd *VS6/vc98/lib/msvcrt.lib
 336549a15d5b8d389a29c573ccba6846 *VS6/vc98/lib/msvcrtd.lib
 
-$ find VS6/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe -a {} VS6.pat \;
+$ find VS6/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe {} {}.pat \;
 .\VS6\vc98\lib\libc.lib: skipped 50, total 1203
 .\VS6\vc98\lib\libcd.lib: skipped 40, total 1281
 .\VS6\vc98\lib\libcimt.lib: skipped 12, total 315
@@ -94,13 +94,39 @@ $ find VS6/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o
 .\VS6\vc98\lib\msvcrt.lib: skipped 854, total 944
 .\VS6\vc98\lib\msvcrtd.lib: skipped 883, total 977
 
-$ wc -l VS6.pat
-11793 VS6.pat
+tar -czvf VS6/VS6.tar.gz VS6/vc98/lib/*.pat
+VS6/vc98/lib/libc.lib.pat
+VS6/vc98/lib/libcd.lib.pat
+VS6/vc98/lib/libcimt.lib.pat
+VS6/vc98/lib/libcimtd.lib.pat
+VS6/vc98/lib/libcmt.lib.pat
+VS6/vc98/lib/libcmtd.lib.pat
+VS6/vc98/lib/libcp.lib.pat
+VS6/vc98/lib/libcpd.lib.pat
+VS6/vc98/lib/libcpmt.lib.pat
+VS6/vc98/lib/libcpmtd.lib.pat
+VS6/vc98/lib/msvcprt.lib.pat
+VS6/vc98/lib/msvcprtd.lib.pat
+VS6/vc98/lib/msvcrt.lib.pat
+VS6/vc98/lib/msvcrtd.lib.pat
 
-$ gzip -v -k VS6.pat
-VS6.pat:         81.2% -- created VS6.pat.gz
+$ wc -l VS6/vc98/lib/*.pat
+   1154 VS6/vc98/lib/libc.lib.pat
+   1242 VS6/vc98/lib/libcd.lib.pat
+    304 VS6/vc98/lib/libcimt.lib.pat
+    572 VS6/vc98/lib/libcimtd.lib.pat
+   1222 VS6/vc98/lib/libcmt.lib.pat
+   1312 VS6/vc98/lib/libcmtd.lib.pat
+   1053 VS6/vc98/lib/libcp.lib.pat
+   1830 VS6/vc98/lib/libcpd.lib.pat
+   1103 VS6/vc98/lib/libcpmt.lib.pat
+   1821 VS6/vc98/lib/libcpmtd.lib.pat
+      3 VS6/vc98/lib/msvcprt.lib.pat
+      4 VS6/vc98/lib/msvcprtd.lib.pat
+     91 VS6/vc98/lib/msvcrt.lib.pat
+     95 VS6/vc98/lib/msvcrtd.lib.pat
+  11806 total
 
-$ du -h VS6.pat*
-5.0M    VS6.pat
-952K    VS6.pat.gz
+$ du -h VS6/*.tar.gz
+952K    VS6/VS6.tar.gz
 ```
