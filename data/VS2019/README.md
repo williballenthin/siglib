@@ -2116,6 +2116,13 @@ dd7b1886ef09701de503370e0afa1390  10.0.19041.0/um/x86/AclUI.Lib
 
 ## .pat
 
+pcf version:
+```
+COFF parser. Copyright (c) 1997-2019 Hex-Rays SA. Version 1.23
+Usage: pcf [-switch or @file or $env_var] file [pattern-file]
+        (wildcards are allowed)
+```
+
 ### compiler: 14.28.29910
 
 ```
