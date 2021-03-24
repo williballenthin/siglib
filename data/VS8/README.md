@@ -1156,52 +1156,98 @@ e96d56366492a85815b8e82389a60bd8 *VS8/PlatformSDK/Lib/AMD64/ComSvcs.Lib
 
 ## x86
 ```
-$ find VS8/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe -a {} VS8.pat \;
-.\VS8\VC\lib\libcmt.lib: skipped 283, total 3056
-.\VS8\VC\lib\libcmtd.lib: skipped 121, total 3174
-.\VS8\VC\lib\libcpmt.lib: skipped 272, total 4734
-.\VS8\VC\lib\libcpmtd.lib: skipped 0, total 5938
-.\VS8\VC\lib\msvcmrt.lib: skipped 284, total 500
-.\VS8\VC\lib\msvcmrtd.lib: skipped 293, total 510
-.\VS8\VC\lib\msvcprt.lib: skipped 3172, total 3174
-.\VS8\VC\lib\msvcprtd.lib: skipped 3408, total 3411
-.\VS8\VC\lib\msvcrt.lib: skipped 1708, total 1835
-.\VS8\VC\lib\msvcrtd.lib: skipped 1776, total 1908
-.\VS8\VC\lib\msvcurt.lib: skipped 1874, total 4862
-.\VS8\VC\lib\msvcurtd.lib: skipped 1962, total 5290
+$ find VS8/VC/lib/ -maxdepth 1 -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe {} {}.pat \;
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\libcmt.lib: skipped 283, total 3056
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\libcmtd.lib: skipped 121, total 3174
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\libcpmt.lib: skipped 272, total 4734
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\libcpmtd.lib: skipped 0, total 5938
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\msvcmrt.lib: skipped 284, total 500
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\msvcmrtd.lib: skipped 293, total 510
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\msvcprt.lib: skipped 3172, total 3174
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\msvcprtd.lib: skipped 3408, total 3411
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\msvcrt.lib: skipped 1708, total 1835
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\msvcrtd.lib: skipped 1776, total 1908
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\msvcurt.lib: skipped 1874, total 4862
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\msvcurtd.lib: skipped 1962, total 5290
+
+$ tar -czvf VS8/VS8.tar.gz VS8/VC/lib/*.pat
+VS8/VC/lib/libcmt.lib.pat
+VS8/VC/lib/libcmtd.lib.pat
+VS8/VC/lib/libcpmt.lib.pat
+VS8/VC/lib/libcpmtd.lib.pat
+VS8/VC/lib/msvcmrt.lib.pat
+VS8/VC/lib/msvcmrtd.lib.pat
+VS8/VC/lib/msvcprt.lib.pat
+VS8/VC/lib/msvcprtd.lib.pat
+VS8/VC/lib/msvcrt.lib.pat
+VS8/VC/lib/msvcrtd.lib.pat
+VS8/VC/lib/msvcurt.lib.pat
+VS8/VC/lib/msvcurtd.lib.pat
 ```
 
 ## amd64
 ```
-$ find VS8/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe -a {} VS8_amd64.pat \;
-.\VS8\VC\lib\amd64\libcmt.lib: skipped 281, total 3018
-.\VS8\VC\lib\amd64\libcmtd.lib: skipped 122, total 3126
-.\VS8\VC\lib\amd64\libcpmt.lib: skipped 262, total 4248
-.\VS8\VC\lib\amd64\libcpmtd.lib: skipped 0, total 5149
-.\VS8\VC\lib\amd64\msvcmrt.lib: skipped 282, total 498
-.\VS8\VC\lib\amd64\msvcmrtd.lib: skipped 291, total 508
-.\VS8\VC\lib\amd64\msvcprt.lib: skipped 3180, total 3181
-.\VS8\VC\lib\amd64\msvcprtd.lib: skipped 3408, total 3411
-.\VS8\VC\lib\amd64\msvcrt.lib: skipped 1661, total 1755
-.\VS8\VC\lib\amd64\msvcrtd.lib: skipped 1728, total 1825
-.\VS8\VC\lib\amd64\msvcurt.lib: skipped 1827, total 4815
-.\VS8\VC\lib\amd64\msvcurtd.lib: skipped 1912, total 5240
+$ find VS8/VC/lib/amd64/ -type f \( -iname "*libc*" -o -iname "*msvc*" -o -iname "*libvc*" -o -iname "*vcruntime*" -o -iname "*libucrt*" \) -exec ../../pcf.exe {} {}.pat \;
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\libcmt.lib: skipped 281, total 3018
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\libcmtd.lib: skipped 122, total 3126
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\libcpmt.lib: skipped 262, total 4248
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\libcpmtd.lib: skipped 0, total 5149
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\msvcmrt.lib: skipped 282, total 498
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\msvcmrtd.lib: skipped 291, total 508
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\msvcprt.lib: skipped 3180, total 3181
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\msvcprtd.lib: skipped 3408, total 3411
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\msvcrt.lib: skipped 1661, total 1755
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\msvcrtd.lib: skipped 1728, total 1825
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\msvcurt.lib: skipped 1827, total 4815
+C:\Users\moritz.raabe\code\Exclusions\parse_lib\gh_siglib\data\VS8\VC\lib\amd64\msvcurtd.lib: skipped 1912, total 5240
+
+$ tar -czvf VS8/VS8_amd64.tar.gz VS8/VC/lib/amd64/*.pat
+VS8/VC/lib/amd64/libcmt.lib.pat
+VS8/VC/lib/amd64/libcmtd.lib.pat
+VS8/VC/lib/amd64/libcpmt.lib.pat
+VS8/VC/lib/amd64/libcpmtd.lib.pat
+VS8/VC/lib/amd64/msvcmrt.lib.pat
+VS8/VC/lib/amd64/msvcmrtd.lib.pat
+VS8/VC/lib/amd64/msvcprt.lib.pat
+VS8/VC/lib/amd64/msvcprtd.lib.pat
+VS8/VC/lib/amd64/msvcrt.lib.pat
+VS8/VC/lib/amd64/msvcrtd.lib.pat
+VS8/VC/lib/amd64/msvcurt.lib.pat
+VS8/VC/lib/amd64/msvcurtd.lib.pat
 ```
 
 ```
-$ wc -l VS8*.pat
-   23240 VS8.pat
-   21821 VS8_amd64.pat
+$ wc -l VS8/VC/lib/*.pat
+   2774 VS8/VC/lib/libcmt.lib.pat
+   3054 VS8/VC/lib/libcmtd.lib.pat
+   4463 VS8/VC/lib/libcpmt.lib.pat
+   5939 VS8/VC/lib/libcpmtd.lib.pat
+    217 VS8/VC/lib/msvcmrt.lib.pat
+    218 VS8/VC/lib/msvcmrtd.lib.pat
+      3 VS8/VC/lib/msvcprt.lib.pat
+      4 VS8/VC/lib/msvcprtd.lib.pat
+    128 VS8/VC/lib/msvcrt.lib.pat
+    133 VS8/VC/lib/msvcrtd.lib.pat
+   2989 VS8/VC/lib/msvcurt.lib.pat
+   3329 VS8/VC/lib/msvcurtd.lib.pat
+  23251 total
 
-$ gzip -v -k VS8.pat
-VS8.pat:         84.6% -- created VS8.pat.gz
+$ wc -l VS8/VC/lib/amd64/*.pat
+    2738 VS8/VC/lib/amd64/libcmt.lib.pat
+    3005 VS8/VC/lib/amd64/libcmtd.lib.pat
+    3987 VS8/VC/lib/amd64/libcpmt.lib.pat
+    5150 VS8/VC/lib/amd64/libcpmtd.lib.pat
+     217 VS8/VC/lib/amd64/msvcmrt.lib.pat
+     218 VS8/VC/lib/amd64/msvcmrtd.lib.pat
+       2 VS8/VC/lib/amd64/msvcprt.lib.pat
+       4 VS8/VC/lib/amd64/msvcprtd.lib.pat
+      95 VS8/VC/lib/amd64/msvcrt.lib.pat
+      98 VS8/VC/lib/amd64/msvcrtd.lib.pat
+    2989 VS8/VC/lib/amd64/msvcurt.lib.pat
+    3329 VS8/VC/lib/amd64/msvcurtd.lib.pat
+   21832 total
 
-$ gzip -v -k VS8_amd64.pat
-VS8_amd64.pat:   85.1% -- created VS8_amd64.pat.gz
-
-$ du -h VS8*.pat*
-9.4M    VS8.pat
-1.5M    VS8.pat.gz
-11M     VS8_amd64.pat
-1.7M    VS8_amd64.pat.gz
+$ du -h VS8/*.tar.gz
+1.5M    VS8/VS8.tar.gz
+1.7M    VS8/VS8_amd64.tar.gz
 ```
