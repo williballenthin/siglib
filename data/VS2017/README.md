@@ -2904,6 +2904,13 @@ c72bfeb49e93646f88faf0817bc5b332  10.0.17763.0/um/x64/AdvAPI32.Lib
 
 ## .pat
 
+pcf version:
+```
+COFF parser. Copyright (c) 1997-2019 Hex-Rays SA. Version 1.23
+Usage: pcf [-switch or @file or $env_var] file [pattern-file]
+        (wildcards are allowed)
+```
+
 ### compiler: 14.16.27023
 
 ```
