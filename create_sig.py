@@ -55,13 +55,14 @@ def collect_tarball_paths(path, exclude=None):
                         skip = True
                         break
                 if skip:
+                    logger.debug(f" [-] skipping {tarball_path}")
                     continue
 
             tarball_paths.append(tarball_path)
     return tarball_paths
 
 
-def extract_pat_files(outdir, tarball_path, include=None):
+def extract_pat_files(outdir, tarball_path, exclude=None, include=None, write_files=True):
     """
     extract all .pat files from a tarball to output directory
     """
@@ -70,12 +71,28 @@ def extract_pat_files(outdir, tarball_path, include=None):
         if not m.name.endswith(".pat"):
             continue
 
+        if exclude:
+            skip = False
+            for exc in exclude:
+                if exc in m.name:
+                    skip = True
+                    break
+            if skip:
+                logger.debug(f" [-] skipping {m.name}")
+                continue
+
         if include:
             for inc in include:
                 if inc in m.name:
-                    write_tar_member(outdir, tar, m)
+                    if write_files:
+                        write_tar_member(outdir, tar, m)
+                    else:
+                        logger.debug(f" [+] {m.name}")
         else:
-            write_tar_member(outdir, tar, m)
+            if write_files:
+                write_tar_member(outdir, tar, m)
+            else:
+                logger.debug(f" [+] {m.name}")
     return 0
 
 
@@ -184,9 +201,7 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv[1:]
 
-    parser = argparse.ArgumentParser(
-        epilog=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
-    )
+    parser = argparse.ArgumentParser(epilog=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
 
     parser.add_argument(
         "outdir",
@@ -194,11 +209,18 @@ def main(argv=None):
         help="path to output directory",
     )
     parser.add_argument("-e", "--exclude", nargs="*", help="exclude paths that contain exclusion string")
-    parser.add_argument("-i", "--include_pats", nargs="*", help="include pat files that contain inclusion string")
+    parser.add_argument("-ep", "--exclude_pats", nargs="*", help="exclude pat files that contain exclusion string")
+    parser.add_argument("-ip", "--include_pats", nargs="*", help="include pat files that contain inclusion string")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--tarballs-root", help="data path to root of tarballs, use with -e and -i")
     group.add_argument("--patfiles", nargs="+", help="paths to input .pat files")
     parser.add_argument("-s", "--sigfile", default="flare.sig", help="name of output .sig file")
+    parser.add_argument(
+        "-n",
+        "--no-act",
+        action="store_true",
+        help="don't make any changes, use with --debug to view selected .pat files",
+    )
     # logging modes
     parser.add_argument("-d", "--debug", action="store_true", help="enable debugging output on STDERR")
     parser.add_argument("-q", "--quiet", action="store_true", help="disable all output but errors")
@@ -214,38 +236,43 @@ def main(argv=None):
         logging.basicConfig(level=logging.INFO)
         logging.getLogger().setLevel(logging.INFO)
 
-    if args.patfiles and (args.exclude or args.include_pats):
-        logger.error("-e and -i arguments can only be used with --tarballs-root")
+    if args.patfiles and (args.exclude or args.exclude_pats or args.include_pats or args.no_act):
+        logger.error("-e, -ep, -ip, -n arguments can only be used with --tarballs-root")
         return -1
+
+    if args.no_act:
+        for tarball_path in collect_tarball_paths(args.tarballs_root, exclude=args.exclude):
+            logger.debug("extracting from %s", tarball_path)
+            extract_pat_files(
+                args.outdir, tarball_path, exclude=args.exclude_pats, include=args.include_pats, write_files=False
+            )
+        return 0
 
     if os.path.exists(args.outdir):
         logger.error("%s already exists", args.outdir)
         return -1
     else:
-        logger.debug("creating output directory %s", args.outdir)
+        logger.info("creating output directory %s", args.outdir)
         os.mkdir(args.outdir)
 
     if args.tarballs_root:
-        logger.debug("collecting tarball paths")
-        tarball_paths = collect_tarball_paths(args.tarballs_root, exclude=args.exclude)
-
-        for tarball_path in tarball_paths:
+        logger.info("collecting tarball paths")
+        for tarball_path in collect_tarball_paths(args.tarballs_root, exclude=args.exclude):
             logger.debug("extracting from %s", tarball_path)
-            extract_pat_files(args.outdir, tarball_path, include=args.include_pats)
-
+            extract_pat_files(args.outdir, tarball_path, exclude=args.exclude_pats, include=args.include_pats)
         patfiles = get_pat_files(args.outdir)
     else:
-        logger.debug("using provided .pat files")
+        logger.info("using provided .pat files")
         patfiles = args.patfiles
 
-    logger.debug("creating sig file %s", args.sigfile)
+    logger.info("creating sig file %s", args.sigfile)
     try:
         sigpath = create_sig_file_from_pats(args.outdir, args.sigfile, patfiles)
     except ValueError as e:
         logger.error(str(e))
         return -1
 
-    logger.debug("zipping sig file %s", sigpath)
+    logger.info("zipping sig file %s", sigpath)
     zipsig(sigpath, save_unzipped_file=True)
 
     return 0
