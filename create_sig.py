@@ -112,7 +112,7 @@ def flatten_path(name):
     return name
 
 
-def create_sig_file_from_pats(outdir, outsigfile, patfiles):
+def create_sig_file_from_pats(outdir, outsigfile, patfiles, signame, reject_functions):
     """
     convenience functionality around IDA's sigmake
     """
@@ -125,8 +125,10 @@ def create_sig_file_from_pats(outdir, outsigfile, patfiles):
 
     outsigfile = os.path.join(outdir, outsigfile)
 
+    reject_functions = [f"-lr{rf}" for rf in reject_functions]
+
     # use multiple -v for more verbosity, two appears to be max
-    args = [PATH_SIGMAKE, "-v", "-v"] + patfiles + [outsigfile]
+    args = [PATH_SIGMAKE, "-v", "-v"] + [f'-n"{signame}"'] + reject_functions + patfiles + [outsigfile]
     logfile = open(os.path.join(outdir, "run1.log"), "wb")
     run(args, stdout=logfile, stderr=logfile)
     logfile.close()
@@ -139,7 +141,9 @@ def create_sig_file_from_pats(outdir, outsigfile, patfiles):
     logfile.close()
 
     if created_temp_files:
-        remove_files(patfiles)
+        logger.debug("removing temp files %s, ...", ", ".join(patfiles[:3]))
+        for f in patfiles:
+            os.remove(f)
 
     if not os.path.exists(outsigfile):
         raise ValueError(f"did not create {outsigfile}")
@@ -154,12 +158,6 @@ def create_temp_pat_files(outdir, files):
         shutil.copy(f, new)
         temp_pat_files.append(new)
     return temp_pat_files
-
-
-def remove_files(pat_files):
-    for f in pat_files:
-        logger.debug("removing file %s", f)
-        os.remove(f)
 
 
 def get_pat_files(path):
@@ -181,12 +179,37 @@ def run(args, cwd=os.curdir, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
 
 def process_exc_file(exc_file):
     """
-    for now just delete first 5 lines
+    process exclusion file
     """
     with open(exc_file, "rb") as f:
-        d = f.read().splitlines(keepends=True)
+        lines = f.read().splitlines(keepends=True)
+
+    include_functions = (
+        "__CxxFrameHandler3",
+        "__strdup",
+        "mainCRTStartup",
+        "_mainCRTStartup",
+    )
+    new_lines = []
+    for line in lines:
+        line = line.decode("utf-8")
+        if line.startswith(include_functions):
+            line = "+" + line
+            new_lines.append(line.encode("utf-8"))
+        else:
+            # TODO
+            # __iswblank_l                                            00 0000 8BFF558BEC66837D08096A407503585DC3FF7508E8........59595DC3......
+            # _iswblank                                               00 0000 8BFF558BEC66837D08096A407503585DC3FF7508E8........59595DC3......
+
+            # TODO
+            # __Toupper                                         	30 7B17 558BEC518B450C5385C056750D8B35........A1........EB058B308B400485
+            # __Toupper_lk                                      	30 7B17 558BEC518B450C5385C056750D8B35........A1........EB058B308B400485
+
+            new_lines.append(line.encode("utf-8"))
+
+    # remove header
     with open(exc_file, "wb") as f:
-        f.writelines(d[5:])
+        f.writelines(new_lines[5:])
 
 
 def zipsig(outsigfile, save_unzipped_file=True):
@@ -216,11 +239,13 @@ def main(argv=None):
     group.add_argument("--patfiles", nargs="+", help="paths to input .pat files")
     parser.add_argument("-s", "--sigfile", default="flare.sig", help="name of output .sig file")
     parser.add_argument(
-        "-n",
+        "-N",
         "--no-act",
         action="store_true",
         help="don't make any changes, use with --debug to view selected .pat files",
     )
+    parser.add_argument("-n", "--signame", help="signature file title (used by IDA)")
+    parser.add_argument("-lr", "--reject_functions", action="append", help="reject functions matching the pattern")
     # logging modes
     parser.add_argument("-d", "--debug", action="store_true", help="enable debugging output on STDERR")
     parser.add_argument("-q", "--quiet", action="store_true", help="disable all output but errors")
@@ -237,7 +262,7 @@ def main(argv=None):
         logging.getLogger().setLevel(logging.INFO)
 
     if args.patfiles and (args.exclude or args.exclude_pats or args.include_pats or args.no_act):
-        logger.error("-e, -ep, -ip, -n arguments can only be used with --tarballs-root")
+        logger.error("-e, -ep, -ip, -N arguments can only be used with --tarballs-root")
         return -1
 
     if args.no_act:
@@ -267,7 +292,7 @@ def main(argv=None):
 
     logger.info("creating sig file %s", args.sigfile)
     try:
-        sigpath = create_sig_file_from_pats(args.outdir, args.sigfile, patfiles)
+        sigpath = create_sig_file_from_pats(args.outdir, args.sigfile, patfiles, args.signame, args.reject_functions)
     except ValueError as e:
         logger.error(str(e))
         return -1
