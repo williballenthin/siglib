@@ -4,9 +4,9 @@ optionally excludes tarball paths and includes pat file names
 
 example runs:
   $ python3 create_sig.py -d -e libraries test -i libc msvc --tarballs-root data/ -- outdir/
-    -d - debug output
+    -d - output debugging messages
     -e - exclude paths containing string `libraries` or `test`
-    -i - include pat files containing `libc` and `msvc`
+    -ip - include pat files containing `libc` and `msvc`
     --tarballs-root - root path storing tarballs containing .pat files
     --
     data/ - root path of tarballs
@@ -33,6 +33,8 @@ logger = logging.getLogger(__name__)
 # the patched sigmake doesn't complain about number of leaves
 PATH_SIGMAKE = os.path.abspath("../sigmake_patched.exe")
 PATH_ZIPSIG = os.path.abspath("../zipsig.exe")
+
+SIGNAME_DEFAULT = "(sigfile)"
 
 
 def collect_tarball_paths(path, exclude=None):
@@ -112,38 +114,32 @@ def flatten_path(name):
     return name
 
 
-def create_sig_file_from_pats(outdir, outsigfile, patfiles, signame, reject_functions):
+def create_sig_file_from_pats(outdir, outsigfile, patfiles, signame, reject_functions, ignore_functions):
     """
     convenience functionality around IDA's sigmake
     """
-    # on Windows need to shorten file names to avoid command line >~ 8100 characters
-    created_temp_files = False
-    if os.name == "nt":
-        logger.debug("creating temporary pat files")
-        patfiles = create_temp_pat_files(outdir, patfiles)
-        created_temp_files = True
-
     outsigfile = os.path.join(outdir, outsigfile)
 
-    reject_functions = [f"-lr{rf}" for rf in reject_functions]
+    reject_functions = [f"-lr{rf}" for rf in reject_functions] if reject_functions else []
+    ignore_functions = [f"-li{igf}" for igf in ignore_functions] if ignore_functions else []
 
     # use multiple -v for more verbosity, two appears to be max
-    args = [PATH_SIGMAKE, "-v", "-v"] + [f'-n"{signame}"'] + reject_functions + patfiles + [outsigfile]
+    args = (
+        [PATH_SIGMAKE, "-v", "-v"] + [f'-n"{signame}"'] + reject_functions + ignore_functions + patfiles + [outsigfile]
+    )
     logfile = open(os.path.join(outdir, "run1.log"), "wb")
-    run(args, stdout=logfile, stderr=logfile)
+    r = run(args, stdout=logfile, stderr=logfile)
     logfile.close()
 
     exc_file = os.path.splitext(outsigfile)[0] + ".exc"
+    if not os.path.exists(exc_file):
+        raise ValueError(f"sigmake failed, check {logfile.name} - did not create exclusion file {exc_file}")
+
     process_exc_file(exc_file)
 
     logfile = open(os.path.join(outdir, "run2.log"), "wb")
     run(args, stdout=logfile, stderr=logfile)
     logfile.close()
-
-    if created_temp_files:
-        logger.debug("removing temp files %s, ...", ", ".join(patfiles[:3]))
-        for f in patfiles:
-            os.remove(f)
 
     if not os.path.exists(outsigfile):
         raise ValueError(f"did not create {outsigfile}")
@@ -158,16 +154,6 @@ def create_temp_pat_files(outdir, files):
         shutil.copy(f, new)
         temp_pat_files.append(new)
     return temp_pat_files
-
-
-def get_pat_files(path):
-    pat_paths = []
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            if file.endswith(".pat"):
-                pat_path = os.path.join(root, file)
-                pat_paths.append(os.path.relpath(pat_path))
-    return pat_paths
 
 
 def run(args, cwd=os.curdir, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
@@ -214,7 +200,9 @@ def process_exc_file(exc_file):
 
 def zipsig(outsigfile, save_unzipped_file=True):
     if save_unzipped_file:
-        shutil.copy(outsigfile, f"{outsigfile}.bu")
+        unzipped_file = f"{outsigfile}.bu"
+        logger.info(f"saving unzipped file as {unzipped_file}")
+        shutil.copy(outsigfile, unzipped_file)
 
     args = [PATH_ZIPSIG, outsigfile]
     run(args)
@@ -237,15 +225,18 @@ def main(argv=None):
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--tarballs-root", help="data path to root of tarballs, use with -e and -i")
     group.add_argument("--patfiles", nargs="+", help="paths to input .pat files")
-    parser.add_argument("-s", "--sigfile", default="flare.sig", help="name of output .sig file")
+    parser.add_argument(
+        "-s", "--sigfile", required=True, help="name of output .sig file, e.g. flare_msvc_rtf_32_64.sig"
+    )
     parser.add_argument(
         "-N",
         "--no-act",
         action="store_true",
         help="don't make any changes, use with --debug to view selected .pat files",
     )
-    parser.add_argument("-n", "--signame", help="signature file title (used by IDA)")
+    parser.add_argument("-n", "--signame", default=SIGNAME_DEFAULT, help="signature file title (used by IDA)")
     parser.add_argument("-lr", "--reject_functions", action="append", help="reject functions matching the pattern")
+    parser.add_argument("-li", "--ignore_functions", action="append", help="ignore functions when comparing leaves")
     # logging modes
     parser.add_argument("-d", "--debug", action="store_true", help="enable debugging output on STDERR")
     parser.add_argument("-q", "--quiet", action="store_true", help="disable all output but errors")
@@ -280,19 +271,25 @@ def main(argv=None):
         logger.info("creating output directory %s", args.outdir)
         os.mkdir(args.outdir)
 
+    if args.signame == SIGNAME_DEFAULT:
+        args.signame = args.sigfile.replace("-", " ").replace("_", " ").replace(".sig", "").upper()
+
     if args.tarballs_root:
         logger.info("collecting tarball paths")
         for tarball_path in collect_tarball_paths(args.tarballs_root, exclude=args.exclude):
             logger.debug("extracting from %s", tarball_path)
             extract_pat_files(args.outdir, tarball_path, exclude=args.exclude_pats, include=args.include_pats)
-        patfiles = get_pat_files(args.outdir)
+        # rely on wildcard extension after copying files to outdir
+        patfiles = [os.path.join(args.outdir, "*.pat")]
     else:
         logger.info("using provided .pat files")
         patfiles = args.patfiles
 
     logger.info("creating sig file %s", args.sigfile)
     try:
-        sigpath = create_sig_file_from_pats(args.outdir, args.sigfile, patfiles, args.signame, args.reject_functions)
+        sigpath = create_sig_file_from_pats(
+            args.outdir, args.sigfile, patfiles, args.signame, args.reject_functions, args.ignore_functions
+        )
     except ValueError as e:
         logger.error(str(e))
         return -1
